@@ -1,5 +1,5 @@
 # Project_2: Ride-With-Us!!!
-![](Images\NYC_Rideshare.png)
+![](Images/NYC_Rideshare.png)
  
 ## Motivation && Summary : 
 
@@ -58,7 +58,7 @@ Model 1 & 2 focuses on determining the tip worthiness of a ride and Model 3, an 
     * Dropoff borough: Manhattan
     * Rideshare company: Uber
 * Total Driver Pay Box Plot
-    * ![summary statistics all fares box plot](Images\pay_box_plot.png)
+    * ![summary statistics all fares box plot](Images/pay_box_plot.png)
 
 ## Summary Statistics for Top 5% Fares (with round trip in original data)
 * Average:
@@ -75,7 +75,7 @@ Model 1 & 2 focuses on determining the tip worthiness of a ride and Model 3, an 
     * Dropoff borough: Manhattan
     * Rideshare company: Uber
 * Total Driver Pay Box Plot
-    * ![summary statistics all fares box plot](Images\top_pay_box_plot.png)
+    * ![summary statistics all fares box plot](Images/top_pay_box_plot.png)
 
 ## Data Cleaning Stages (original data)
 1. Parquet to CSV (trip_data.csv)
@@ -104,48 +104,48 @@ Model 1 & 2 focuses on determining the tip worthiness of a ride and Model 3, an 
 Logistic Regression was implemented due to its analysis based on dichotomous variables - meaning we determine whether there will be a tip or no tip. For our dataset, tip is represented by 1 and no tip by 0. The goal is to estimate the probability of occurence of drivers receiving tips or not.
 Results:
 
-![LRM](Images\LR_Model.png)
-![Roc](Images\LR_ROC.png)
+![LRM](Images/LR_Model.png)
+![Roc](Images/LR_ROC.png)
 
 **Interpretation**:
 The model provided an accuracy score of 99.83, precision and recall of 100% and auc_roc score of 99.84%. The accuracy score determines the accurate assessment of the model. The model, in part for **tips** scored a precision for 100% whereas the **no tip** classifier registered a 100% recall. The issue at hand will be the fact that the precision score does not take into account the `false negative`. A higher recall helps us not to miss out on potential customers who might tip. Due to the imbalance nature of the dataset, we can conclude that the model might have high accuracy score predicting all fares to have received tips without accounting for **no tips**. To resolve this, resampling was implemented to combat this issue.   
 
 ### Resampling LR Model with RandomOversampler
 
-![ReLRM](Images\LR_ModelSampled.png)
-![Roc](Images\LRO_ROC.png)
+![ReLRM](Images/LR_ModelSampled.png)
+![Roc](Images/LRO_ROC.png)
 
 With RandomOverSampler solving the problem of imbalanced datasets, tip and no tip `value_counts` had an increase dataset of 7239 each. Results showed an accuracy score of 99.91%, precision and recall all at 100% and auc_roc of 99.92%. With a balance dataset, we can conclude that the accuracy score can be relied on as a better assessment of the model. High Precision and High Recall, help us determine where there will be a tip and take into account we might not miss out on potential customers who will increase our chances of a good tip plus roc score increasing to 99.92. 
 
 For the precaution of making sure that our models are accurate, `XGBoostClassifer` was used to address overfitting while increasing speed and efficiency of our model. XGBoostClassifier resulted to an accuracy score of 100%, high precision and high recall of 100% and roc-auc score of 99.83%. See below for Classification report:
 
-![XGBC](Images\XGBC_Model.png)
-![Roc](Images\XGB_ROC.png)
+![XGBC](Images/XGBC_Model.png)
+![Roc](Images/XGB_ROC.png)
 
 ## Random Forest Ensembling Method
 
 Random Forest combines multiple decision trees by averaging to reach a single results which is trianed through Regression and Classification Tree algorithm. Random Forest results will be used to compare the results of Logistic Regression Model.Using the `regular` random forest model - classification report achieved an accuracy score of 99.9161%, precision and recall scores of 100% each accordingly. ROC_AUC curve which measures the classification effectiveness by distingushing between classes scored a 99.92%
 
-![RRF](Images\RRF_Model.png)
-![Roc](Images\RF_ROC.png)
+![RRF](Images/RRF_Model.png)
+![Roc](Images/RF_ROC.png)
 
 A `Balanced` Random Forest Model also achieved a calssification report of an accuracy score of 99.91% , precision and recall scores of 100%. With ROC_AUC score of 99.92%. This can be relied on since the dataset has been balanced between tips and no_tips.
 
-![BRF](Images\BRF_Model.png)
-![Roc](Images\RFRe_ROC.png)
+![BRF](Images/BRF_Model.png)
+![Roc](Images/RFRe_ROC.png)
 
 Implementing `Smoteenn` as part  of the RandomForestClassifier does a better job over-sampling using the `SMOTE` and cleaning/undersampling using `Edited Nearest Neighbors`. SMOTEENN scored an accuracy of 99.41%, with Precision of 100% and Recall of 99% accordingly. With an ROC_AUC score of 99.41%.
 
-![SMOTEENN](Images\SMOTEENN.png)
-![ROC](Images\SMOTEENN_ROC.png)
+![SMOTEENN](Images/SMOTEENN.png)
+![ROC](Images/SMOTEENN_ROC.png)
 
 Based on the Balanced RandomForest and SMOTEENN which balanced out the datasets, it can be concluded that Balanced RandomForest did a better job with an accuracy score of 99.91% , Precision and Recall of 100% , and an roc_auc of 99.92% whereas SMOTEENN scored an accuracy of 99.41%, Precision 100% and Recall of 99% , and roc_curve of 99.41%. To determine which produced the best results, the confusion matrix was analyzed. Balanced RandomForest had TP of 2404 , FP of 0, FN of 1 and TN of 595 ; SMOTEENN produced a TP of 2404 , FP of 0, FN of 7, and TN of 589. It would be best to use the Balanced RandomForest as a benchmark to assess the behavior of extra tipping for drivers due it the models nature of training and learning the dataset to produce 1 false negative. 
 
 ## Deep Learning Model - Neural Network
 Multi-Layer Perceptron Classifier (MLPC) as a deep learning neural network model trains model implementing backpropagation to master and learn relevant features making sure to implement the Stochastic Gradient Descent (SGD) to asses and respond to the best fit model, and minimizing the loss function in the process. This produced a accuracy score of 96%, Precision of 93% and Recall of 99%, with an roc_auc of 91.13%
 
-![MLPC](Images\MLPC_Model.png)
-![ROC](Images\MPC_ROC.png)
+![MLPC](Images/MLPC_Model.png)
+![ROC](Images/MPC_ROC.png)
 
 ##  Machine Learning Conclusion
 Taking out the Logistic Regression and the Random Forest models which had imbalanced datasets, all other Machine learning models can be used to and or combined to reach a better ML to implement since every Ml model comes with its different strategies in achieving results. Factoring everything in - confusion matrix, accuracy score, precision and recal, roc_auc score, the best model to use will be LR Oversampled perfromed better with the datasets, followed by Balanced RandomForest, XGBoost Classifier, SMOTEENN and MLPClassifier to decide on the tipping locations for drivers. In the near future, deep learning, MPLClassifier and others could be implemented to train the dataset effectively as I believe that will be a great resource to produce accurate insight and predictions mimicking the human brain in order to help with the aim of the project. 
@@ -165,11 +165,11 @@ Taking out the Logistic Regression and the Random Forest models which had imbala
     * PM = 12:00-19:00
 * Are some or all of these surge periods?
 
-* ![prophet plot](Images\prophet_365.png)
+* ![prophet plot](Images/prophet_365.png)
 
-* ![prophet y_hat](Images\prophet_y_hat.png)
+* ![prophet y_hat](Images/prophet_y_hat.png)
 
-* ![prophet components](Images\prophet_components.png)
+* ![prophet components](Images/prophet_components.png)
 
 ## Driver Schedule Recommendations (based on historical analysis and model output)
 * [model implications for tips]
